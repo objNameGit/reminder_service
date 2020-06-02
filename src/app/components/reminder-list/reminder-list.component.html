@@ -1,0 +1,7 @@
+<mat-list role="list" class='list'>
+    <reminder-list-item
+        *ngFor="let reminder of remindersService.reminderList"
+        [reminder]="reminder"
+    >
+    </reminder-list-item>
+</mat-list>
