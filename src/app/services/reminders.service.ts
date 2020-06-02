@@ -71,14 +71,18 @@ export class RemindersService {
       .pipe(
         tap(
           authData => {
-            this.myStorage.setItem('reminderAppUserId', authData.id);
-            this.myStorage.setItem('reminderAppUserName', authData.name);
+            const id = this.myStorage.getItem('reminderAppUserId');
+
+            if(!id) {
+              this.myStorage.setItem('reminderAppUserId', authData.id);
+              this.myStorage.setItem('reminderAppUserName', authData.name);
+            }
+
             this.getReminderList(authData.id);
-        }
-          ),
-          mergeMap(authData => {
-            return this.getReminderList(authData.id)
-          })
+        }),
+        mergeMap(authData => {
+          return this.getReminderList(authData.id);
+        })
       )
   }
 
