@@ -1,14 +1,19 @@
 import { Component } from '@angular/core';
 import { RemindersService } from './services/reminders.service';
+import { DialogService } from './services/dialog-service/dialog.service';
 import { IReminderItem } from '@src/interfaces/IReminderItem';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [DialogService, RemindersService]
 })
 export class AppComponent {
-  constructor(private remindersService: RemindersService) { }
+  constructor(
+    private remindersService: RemindersService,
+    private dialogService: DialogService,
+  ) { }
 
   private userId: string;
   public title = 'Сервис напоминаний';
@@ -34,8 +39,14 @@ export class AppComponent {
     return this.remindersService.deleteSelected()
   }
 
-  openCreateReminderForm() {
-
+  openAddReminderForm() {
+    this.dialogService.openAddReminderForm()
+    .afterClosed().subscribe(res => {
+        if (res) {
+            // this.remindersService.addReminder({});
+        }
+        console.log(res)
+    });
   }
 
 }
