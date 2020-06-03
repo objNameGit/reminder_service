@@ -8,21 +8,12 @@ import { IReminderItem } from '@src/interfaces/IReminderItem';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  reminderList: IReminderItem[];
-  userId: string;
-
   constructor(private remindersService: RemindersService) { }
-  
-  ngOnInit() {
-    this.getReminderList()
-    // this.getUserId();
-  }
 
-  getReminderList(): void {
-    this.remindersService.getData()
-      .subscribe(reminderList => {
-        this.reminderList = reminderList
-      })
+  private userId: string;
+  public title = 'Сервис напоминаний';
+
+  ngOnInit() {
   }
 
   getUserId(): void {
@@ -30,5 +21,21 @@ export class AppComponent {
       .subscribe(obj => this.userId = obj.id);
   };
 
-  title = 'reminder-app-final';
+  toggleAll(event) {
+    return this.remindersService.toggleAll(event);
+  }
+
+  hasCheckedElem() {
+    return this.remindersService.hasCheckedElem();
+
+  }
+
+  deleteSelected() {
+    return this.remindersService.deleteSelected()
+  }
+
+  openCreateReminderForm() {
+
+  }
+
 }

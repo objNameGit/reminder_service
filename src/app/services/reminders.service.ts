@@ -83,4 +83,22 @@ export class RemindersService {
       return of(result as T);
     };
   }
+
+  toggleAll(event) {
+
+  }
+
+  toggleElem(id){}
+
+  hasCheckedElem(): boolean {
+    return false;
+  }
+
+  isElemChecked(id): boolean {
+    return false;
+  }
+
+  deleteAll() {}
+
+  deleteSelected() {}
 }

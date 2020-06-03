@@ -1,0 +1,51 @@
+:host {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-align: center;
+    margin: 8px 0;
+}
+
+p {
+    margin: 0;
+}
+
+.spacer {
+    flex: 1;
+}
+
+
+.title {
+    text-align: center;
+}
+
+.reminder-app {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+.reminder-app__content {
+    min-width: 50%;
+}
+
+.reminder-app__side-menu {
+    margin-right: 20px;
+}
+
+.side-menu__add-button {
+    position: sticky;
+    top: 20px;
+}

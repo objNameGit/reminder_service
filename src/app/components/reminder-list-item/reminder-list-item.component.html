@@ -1,1 +1,16 @@
-<p>reminder-list-item works!</p>
+<mat-list-item class="list-item">
+    <mat-icon matListIcon >
+        <mat-checkbox color="primary" 
+            (change) ="toggleElem(reminder.id)"
+            [checked]="isElemChecked(reminder.id)"
+        ></mat-checkbox>
+    </mat-icon>
+    <h3 matLine class="list-item__title"> {{ reminder.title }}</h3>
+    <div mat-line class="list-item__comment"> {{reminder.comment}} </div>
+    <div mat-line class="list-item__date"> {{ reminder.date | date:'EEEE, d MMMM, y, h:mm' }} </div>
+    <div class="list-item__delete-button-container">
+        <button mat-mini-fab class="list-item__delete-button" color="primary" aria-label="">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</mat-list-item>

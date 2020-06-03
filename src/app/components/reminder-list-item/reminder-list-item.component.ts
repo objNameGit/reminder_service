@@ -10,12 +10,19 @@ import { RemindersService } from '@src/app/services/reminders.service';
   styleUrls: ['./reminder-list-item.component.css']
 })
 export class ReminderListItemComponent implements OnInit {
-
   constructor(private remindersService: RemindersService) { }
+
+  @Input() reminder:IReminderItem;
 
   ngOnInit(): void {
   }
 
-  @Input() reminder:IReminderItem;
+  toggleElem(id) {
+    this.remindersService.toggleElem(id);
+  }
+
+  isElemChecked(id) {
+    this.remindersService.isElemChecked(id);
+  }
 
 }
