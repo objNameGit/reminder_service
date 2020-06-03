@@ -1,0 +1,62 @@
+<form class='create-form'
+    [formGroup]="reminderForm"
+    (ngSubmit)="submit()"
+    novalidate
+>
+    <h2>Новое напоминание!</h2>
+    <div class="create-form__close-button" [mat-dialog-close]="false">
+        <mat-icon color="#3e3e3e">close</mat-icon>
+    </div>
+    <div class='create-form__input-list input-list'>
+        <!-- Заголовок -->
+        <div class="input-list__line">
+            <mat-form-field appearance="legacy" class="full-width">
+                <mat-label>Заголовок</mat-label>
+                <input matInput placeholder="Зайти в магазин" title="title" formControlName="title" required>
+                <mat-hint>Введите заголовок</mat-hint>
+                <mat-error *ngIf="reminderForm.controls['title'].hasError('required')">Поле не может быть пустым</mat-error>
+            </mat-form-field>
+        </div>
+        <!-- Дата и время -->
+        <div class="input-list__line flex-line">
+            <!-- Дата -->
+            <mat-form-field appearance="legacy" class="half-width">
+                <mat-label>Дата</mat-label>
+                <input matInput [min]="minDate" [matDatepicker]="picker" formControlName="date" required >
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-hint>Формат: ДД.ММ.ГГГГ</mat-hint>
+                <mat-error *ngIf="reminderForm.controls['date'].hasError('required') || reminderForm.controls['date'].invalid">{{ getDateErrorMessage() }}</mat-error>
+            </mat-form-field>
+
+            <!-- Время -->
+            <div class="divider"></div>
+            <mat-form-field appearance="legacy" class="half-width">
+                <mat-label>Вермя</mat-label>
+                <input matInput type="time" formControlName="time">
+                <mat-hint>Введите время</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <!-- Комметарий -->
+        <div class="input-list__line">
+            <mat-form-field appearance="legacy" class="full-width">
+                <mat-label>Текст напоминания</mat-label>
+                <textarea matInput placeholder="Купить апельсины, яблоки, воду." rows="5"></textarea>
+                <mat-hint>Введите текст напоминания</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="create-form__button-list">
+        <button mat-raised-button class="create-form__button" id="no-button" [mat-dialog-close]="false">Отмена</button>
+        <button mat-raised-button 
+            сlass="create-form__button" 
+            id="yes-button"
+            type="submit"
+            [mat-dialog-close]="true"
+            [disabled]="reminderForm.invalid"
+        >Создать</button>
+    </div>
+    {{ this.reminderForm.invalid }}
+</form>

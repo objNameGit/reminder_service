@@ -101,4 +101,8 @@ export class RemindersService {
   deleteAll() {}
 
   deleteSelected() {}
+
+  addReminder(reminder) {
+
+  }
 }
