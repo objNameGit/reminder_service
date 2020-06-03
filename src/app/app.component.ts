@@ -19,7 +19,7 @@ export class AppComponent {
   }
 
   getReminderList(): void {
-    this.remindersService.getAll()
+    this.remindersService.getData()
       .subscribe(reminderList => {
         this.reminderList = reminderList
       })

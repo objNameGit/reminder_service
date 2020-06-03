@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap, mergeMap } from 'rxjs/operators';
 
 import { IReminderItem } from '@src/interfaces/IReminderItem';
@@ -19,42 +19,6 @@ export class RemindersService {
   private authUrl = `${this.baseUrl}/api/auth`;
   private myStorage = localStorage;
 
-  // private userId = this.myStorage.getItem('reminderAppUserId');
-  // private reminderList = [];
-
-  // async getUserId(): Promise<string> {
-  //   let userId = this.myStorage.getItem('reminderAppUserId');
-
-  //   if (userId) {
-  //     this.http.post <IAutorizationData>(this.authUrl, {})
-  //       .subscribe((res) => {
-  //         userId = res.id;
-
-  //         this.myStorage.setItem('reminderAppUserId', res.id)
-  //       });
-  //   }
-
-  //   return userId;
-  // }
-
-  getUserId111(): Observable<IAutorizationData> {
-    this.myStorage.removeItem('reminderAppUserId')
-    let userId = this.myStorage.getItem('reminderAppUserId');
-
-    console.log ('launch')
-
-    if (!userId) {
-      return this.http.post<any>(this.authUrl, {})
-        .pipe(
-          tap(_ => {
-            this.myStorage.setItem('reminderAppUserId', _.id);
-
-            return _.id;
-          }),
-        )
-    }
-  }
-
   getUserId(): Observable<IAutorizationData> {
     let id = this.myStorage.getItem('reminderAppUserId');
     let name = this.myStorage.getItem('reminderAppUserName');
@@ -66,24 +30,32 @@ export class RemindersService {
     return this.http.post<any>(this.authUrl, {});
   }
 
-  getAll() {
-    return this.getUserId()
+  getData(): Observable<IReminderItem[]> {
+    const userId = this.myStorage.getItem('reminderAppUserId');
+    let result = null;
+
+    // Если id пользователя не найден, делаем запрос на получение id.
+    if (!userId) {
+      result = this.getUserId()
       .pipe(
         tap(
           authData => {
-            const id = this.myStorage.getItem('reminderAppUserId');
-
-            if(!id) {
-              this.myStorage.setItem('reminderAppUserId', authData.id);
-              this.myStorage.setItem('reminderAppUserName', authData.name);
+            if (!authData.id) {
+              return throwError("property 'id' can`t be empty");
             }
 
             this.getReminderList(authData.id);
         }),
         mergeMap(authData => {
           return this.getReminderList(authData.id);
-        })
-      )
+        }),
+        catchError(this.handleError('getUserId: ', []))
+      );
+    } else {
+      result = this.getReminderList(userId)
+    }
+
+    return result;
   }
 
   getReminderList(userId: string): Observable<IReminderItem[]> {
