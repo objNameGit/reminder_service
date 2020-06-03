@@ -20,10 +20,11 @@ export class RemindersService {
   private myStorage = localStorage;
 
   getUserId(): Observable<IAutorizationData> {
-    let id = this.myStorage.getItem('reminderAppUserId');
-    let name = this.myStorage.getItem('reminderAppUserName');
+    const userAuthData = this.getUserAuthData();
 
-    if (id) {
+    if (userAuthData) {
+      const { name, id  }= userAuthData;
+
       return of({id, name});
     }
 
@@ -31,11 +32,11 @@ export class RemindersService {
   }
 
   getData(): Observable<IReminderItem[]> {
-    const userId = this.myStorage.getItem('reminderAppUserId');
+    const userAuthData = this.getUserAuthData();
     let result = null;
 
     // Если id пользователя не найден, делаем запрос на получение id.
-    if (!userId) {
+    if (!userAuthData) {
       result = this.getUserId()
       .pipe(
         tap(
@@ -43,7 +44,7 @@ export class RemindersService {
             if (!authData.id) {
               return throwError("property 'id' can`t be empty");
             }
-
+            this.myStorage.setItem('reminderUserAuthData', JSON.stringify(authData));
             this.getReminderList(authData.id);
         }),
         mergeMap(authData => {
@@ -52,7 +53,7 @@ export class RemindersService {
         catchError(this.handleError('getUserId: ', []))
       );
     } else {
-      result = this.getReminderList(userId)
+      result = this.getReminderList(userAuthData.id)
     }
 
     return result;
@@ -88,7 +89,7 @@ export class RemindersService {
 
   }
 
-  toggleElem(id){}
+  toggleElem(id) {}
 
   hasCheckedElem(): boolean {
     return false;
@@ -104,5 +105,12 @@ export class RemindersService {
 
   addReminder(reminder) {
 
+  }
+
+  getUserAuthData() {
+    const userAuthData = this.myStorage.getItem('reminderUserAuthData');
+    const result = userAuthData ? JSON.parse(userAuthData) : null;
+
+    return result;
   }
 }
