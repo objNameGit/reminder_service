@@ -1,6 +1,7 @@
 <mat-list role="list" class='list'>
+    <div *ngIf="reminderList.length === 0"> Нет напомнаний. </div>
     <reminder-list-item
-        *ngFor="let reminder of remindersService.reminderList"
+        *ngFor="let reminder of reminderList"
         [reminder]="reminder"
     >
     </reminder-list-item>
