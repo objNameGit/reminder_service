@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { IReminderItem } from '@src/interfaces/IReminderItem';
-import { RemindersService } from '@src/app/services/reminders.service';
+import { RemindersService } from '@src/app/services/reminder-service/reminders.service';
 
 @Component({
   selector: 'reminder-list',

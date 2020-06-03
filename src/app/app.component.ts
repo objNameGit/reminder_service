@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RemindersService } from './services/reminders.service';
+import { RemindersService } from './services/reminder-service/reminders.service';
 import { DialogService } from './services/dialog-service/dialog.service';
 import { IReminderItem } from '@src/interfaces/IReminderItem';
 

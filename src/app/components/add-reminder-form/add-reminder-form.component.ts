@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {FormControl, Validators, NgForm, FormGroup} from '@angular/forms';
 
-import { RemindersService } from '@src/app/services/reminders.service';
+import { RemindersService } from '@src/app/services/reminder-service/reminders.service';
 import { v4 as uuidv4 } from "uuid";
 
 @Component({
