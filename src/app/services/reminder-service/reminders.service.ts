@@ -163,7 +163,7 @@ export class RemindersService {
 
   toggleElem(id: string) {
     const isElemChecked = this.isElemChecked(id);
-    const newObj = JSON.parse(JSON.stringify(this.checkedItemList));
+    const newObj = this.checkedItemList.filter(() => true);
     
     if (isElemChecked) {
       delete newObj[id];

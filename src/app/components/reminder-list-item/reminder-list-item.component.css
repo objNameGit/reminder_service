@@ -1,0 +1,28 @@
+.list-item {
+    border: 1px solid #3f51b530;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.list-item:hover {
+    background-color: #3f51b524;
+}
+
+.checkbox-icon-container {
+    display: flex;
+}
+
+.list-item__info {
+    padding-right: 26px!important;
+}
+
+.list-item__title {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.list-item__text,
+.list-item__title {
+    margin-bottom: 5px;
+}

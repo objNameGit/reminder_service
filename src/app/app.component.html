@@ -11,28 +11,43 @@
     </button>
   </div>
 
-  <div class='reminder-app__content'>
+  <div class='reminder-app__content content'>
     <mat-card>
+      <!-- Заголовок -->
       <mat-card-title class="title">{{ title }}</mat-card-title>
-      <div class='button-list'>
-        <mat-icon matListIcon>
-          <mat-checkbox
-            color='primary' 
-            (change)="toggleAll($event)"
-            [checked]="isCheckedActive()"
-            [indeterminate]="remindersService.isIndeterminateActive$ | async"
-            (indeterminateChange)="unselectedAll()"
-            ></mat-checkbox>
-        </mat-icon>
-        <button
-          mat-raised-button
-          color="primary"
-          [disabled]="!hasCheckedElem"
-          (click)="deleteSelected()"
-        > 
-          Удалить выбранное
-        </button>
-      </div>
+
+      <!-- Кнопки выделить всё / удалить выбранное -->
+      <mat-list class="content__action-button-list action-button-list">
+        <!-- <div class="content__action-button-list action-button-list"> -->
+        
+          <!-- Кнопка "выделить всё" -->
+          <mat-list-item class="action-button-list__action-button select-all-button">
+            <mat-icon matListIcon>
+              <mat-checkbox
+                color='primary' 
+                (change)="toggleAll($event)"
+                [checked]="isCheckedActive()"
+                [indeterminate]="remindersService.isIndeterminateActive$ | async"
+                (indeterminateChange)="unselectedAll()"
+              ></mat-checkbox>
+            </mat-icon>
+            
+          </mat-list-item>
+
+          <!-- Кнопка "удалить выбранное" -->
+          <mat-list-item class="action-button-list__action-button delete-selected-button">
+            <button 
+              mat-raised-button
+              color="primary"
+              [disabled]="!hasCheckedElem"
+              (click)="deleteSelected()"
+            > 
+              Удалить выбранное
+            </button>
+          </mat-list-item>
+        <!-- </div> -->
+
+      </mat-list>
       <reminder-list></reminder-list>
     </mat-card>
   </div>

@@ -26,6 +26,7 @@ h6 {
     display: flex;
     justify-content: center;
     margin: auto;
+    width: 50%;
 }
 
 .reminder-app__content {
@@ -39,4 +40,10 @@ h6 {
 .side-menu__add-button {
     position: sticky;
     top: 20px;
+}
+
+.content__action-button-list {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }

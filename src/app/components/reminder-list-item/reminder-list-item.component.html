@@ -1,21 +1,23 @@
 <mat-list-item class="list-item">
-    <mat-icon matListIcon >
+    <mat-icon matListIcon class="checkbox-icon-container">
         <mat-checkbox color="primary" 
             (change) ="toggleElem()"
             [checked]="isElemChecked"
         ></mat-checkbox>
     </mat-icon>
-    <h3 matLine class="list-item__title"> {{ reminder.title }}</h3>
-    <div mat-line class="list-item__comment"> {{reminder.comment}} </div>
-    <div mat-line class="list-item__date"> {{ reminder.date | date:'EEEE, d MMMM, y, h:mm' }} </div>
-    <div class="list-item__delete-button-container">
+    <div matLine class="list-item__info" (click)="openAddReminderForm()">
+        <h3 matLine class="list-item__title"> {{ reminder.title }}</h3>
+        <div mat-line class="list-item__text"> {{reminder.comment}} </div>
+        <div mat-line class="list-item__date"> {{ reminder.date | date:'EEEE, d MMMM, y, h:mm' }} </div>
+    </div>
+    <div class="list-item__button-container">
         <button
             mat-mini-fab
             class="list-item__delete-button" color="primary" 
-            aria-label=""
+            aria-label="Delete reminder"
             (click)="deleteReminder()"
         >
-            <mat-icon>delete</mat-icon>
+          <mat-icon>delete</mat-icon>
         </button>
     </div>
 </mat-list-item>

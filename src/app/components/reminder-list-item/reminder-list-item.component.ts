@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import type { IReminderItem } from '@src/interfaces/IReminderItem';
 import { RemindersService } from '@src/app/services/reminder-service/reminders.service';
+import { DialogService } from '@src/app/services/dialog-service/dialog.service';
+
+import type { IReminderItem } from '@src/interfaces/IReminderItem';
 
 
 @Component({
@@ -10,7 +12,10 @@ import { RemindersService } from '@src/app/services/reminder-service/reminders.s
   styleUrls: ['./reminder-list-item.component.css']
 })
 export class ReminderListItemComponent implements OnInit {
-  constructor(private remindersService: RemindersService) { }
+  constructor(
+    private remindersService: RemindersService,
+    private dialogService: DialogService,
+  ) { }
 
   @Input() reminder:IReminderItem;
 
@@ -33,6 +38,10 @@ export class ReminderListItemComponent implements OnInit {
 
   deleteReminder(): void {
     this.remindersService.deleteReminder(this.reminder.id);
+  }
+
+  openAddReminderForm() {
+    this.dialogService.openAddReminderForm();
   }
 
 }
