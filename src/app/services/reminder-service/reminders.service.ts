@@ -19,17 +19,18 @@ export class RemindersService {
   private indeterminateStatus = new BehaviorSubject<boolean>(false);
   private checkedIdList = new BehaviorSubject<object>({});
 
-  set state(newList:any) {
-    const stubReminderList = this.myStorage.setItem('reminderList', JSON.stringify(newList));
+  set state(newList:IReminderItem[]) {
+    const sortList = newList.sort((reminderA, reminderB) => reminderA.date - reminderB.date);
 
-    console.log ('set state =', newList);
-    this.reminderList.next(newList);
+    // Сохраняем новое состояние в локальном хранилище.
+    this.myStorage.setItem('reminderList', JSON.stringify(sortList));
+
+    this.reminderList.next(sortList);
   }
 
   get state() {
     const newList = this.reminderList.getValue();
 
-    // console.log('new List = ', newList);
     return newList;
   }
 
