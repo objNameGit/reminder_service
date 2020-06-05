@@ -6,6 +6,7 @@ import { catchError, map, tap, mergeMap, filter } from 'rxjs/operators';
 import { IReminderItem } from '@src/interfaces/IReminderItem';
 import { IAutorizationData } from '@src/interfaces/IAutorizationData';
 
+import cloneDeep from '@src/../lodash.clonedeep';
 @Injectable({
   providedIn: 'root'
 })
@@ -163,8 +164,8 @@ export class RemindersService {
 
   toggleElem(id: string) {
     const isElemChecked = this.isElemChecked(id);
-    const newObj = this.checkedItemList.filter((elem) => true);
-    
+    const newObj = cloneDeep(this.checkedItemList);
+
     if (isElemChecked) {
       delete newObj[id];
     } else {
