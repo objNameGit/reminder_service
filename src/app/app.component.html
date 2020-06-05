@@ -19,13 +19,15 @@
           <mat-checkbox
             color='primary' 
             (change)="toggleAll($event)"
-            [checked]="hasCheckedElem()"
-          ></mat-checkbox>
+            [checked]="isCheckedActive()"
+            [indeterminate]="remindersService.isIndeterminateActive$ | async"
+            (indeterminateChange)="unselectedAll()"
+            ></mat-checkbox>
         </mat-icon>
         <button
           mat-raised-button
           color="primary"
-          [disabled]="!hasCheckedElem()"
+          [disabled]="!hasCheckedElem"
           (click)="deleteSelected()"
         > 
           Удалить выбранное

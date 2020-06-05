@@ -7,18 +7,30 @@ import { IReminderItem } from '@src/interfaces/IReminderItem';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [DialogService, RemindersService]
 })
 export class AppComponent {
   constructor(
-    private remindersService: RemindersService,
+    readonly remindersService: RemindersService,
     private dialogService: DialogService,
   ) { }
 
   private userId: string;
   public title = 'Сервис напоминаний';
+  public hasCheckedElem: boolean = false;
+  public isChecked = false
 
   ngOnInit() {
+    // this.remindersService.isIndeterminateActive$.subscribe((value) => {
+    //   console.log ('isIndeterminate = ', value)
+    //   this.isIndeterminate = value;
+    // });
+    this.remindersService.stubAddUserToStorage();
+
+    this.remindersService.checkedItemList$.subscribe((value) => {
+      const length = Object.keys(value).length;
+
+      this.hasCheckedElem = !!length;
+    });
   }
 
   getUserId(): void {
@@ -30,9 +42,12 @@ export class AppComponent {
     return this.remindersService.toggleAll(event);
   }
 
-  hasCheckedElem() {
-    return this.remindersService.hasCheckedElem();
+  unselectedAll() {
+    return this.remindersService.unselectedAll();
+  }
 
+  isCheckedActive() {
+    return this.remindersService.isCheckedActive();
   }
 
   deleteSelected() {
@@ -40,13 +55,7 @@ export class AppComponent {
   }
 
   openAddReminderForm() {
-    this.dialogService.openAddReminderForm()
-    .afterClosed().subscribe(res => {
-        if (res) {
-            // this.remindersService.addReminder({});
-        }
-        console.log(res)
-    });
+    this.dialogService.openAddReminderForm();
   }
 
 }

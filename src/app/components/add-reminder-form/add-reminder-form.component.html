@@ -42,7 +42,7 @@
         <div class="input-list__line">
             <mat-form-field appearance="legacy" class="full-width">
                 <mat-label>Текст напоминания</mat-label>
-                <textarea matInput placeholder="Купить апельсины, яблоки, воду." rows="5"></textarea>
+                <textarea matInput placeholder="Купить апельсины, яблоки, воду." rows="5" formControlName="comment"></textarea>
                 <mat-hint>Введите текст напоминания</mat-hint>
             </mat-form-field>
         </div>
@@ -54,7 +54,6 @@
             сlass="create-form__button" 
             id="yes-button"
             type="submit"
-            [mat-dialog-close]="true"
             [disabled]="reminderForm.invalid"
         >Создать</button>
     </div>

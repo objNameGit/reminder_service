@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {FormControl, Validators, NgForm, FormGroup} from '@angular/forms';
+import { FormControl, Validators, NgForm, FormGroup } from '@angular/forms';
 
 import { RemindersService } from '@src/app/services/reminder-service/reminders.service';
 import { v4 as uuidv4 } from "uuid";
+import { IReminderItem } from '@src/interfaces/IReminderItem';
 
 @Component({
   selector: 'add-reminder-form',
@@ -13,11 +14,12 @@ import { v4 as uuidv4 } from "uuid";
 export class AddReminderFormComponent implements OnInit {
 
   constructor(
-    private dialogRef: MatDialogRef<AddReminderFormComponent>,
-    private remindersService: RemindersService
-  ) { }
+    private readonly dialogRef: MatDialogRef<AddReminderFormComponent>,
+    readonly remindersService: RemindersService
+    ) { }
+  @Input() reminderList: IReminderItem[];
 
-  public minDate:object = new Date();
+  public minDate: object = new Date();
   public reminderForm: FormGroup = new FormGroup({
     "title": new FormControl("", Validators.required),
     "date": new FormControl("", [
@@ -25,7 +27,7 @@ export class AddReminderFormComponent implements OnInit {
       this.userDateValidator,
     ]),
     "time": new FormControl("00:00", Validators.pattern("[0-9][0-9]:[0-9][0-9]")),
-    "subtitle": new FormControl(""),
+    "comment": new FormControl(""),
   });
 
   ngOnInit(): void {
@@ -43,30 +45,24 @@ export class AddReminderFormComponent implements OnInit {
   }
 
   submit() {
-    const { title, subtitle, date, time } = this.reminderForm.value;
+    const { title, comment, date, time } = this.reminderForm.value;
     const [hours, minutes] = time.split(":");
-    const dateTime = new Date().setHours(hours, minutes);
+    const dateTime = new Date(date).setHours(hours, minutes);
     const reminder = {
       id: uuidv4(),
-      time: dateTime,
+      date: dateTime,
       title,
-      subtitle,
+      comment,
     }
 
-    console.log(this.reminderForm);
-    this.remindersService.addReminder(reminder)
-    // this.remindersService.test()
+    this.remindersService.state = [...this.remindersService.state, reminder];
+    this.closeDialog();
   }
 
   closeDialog(): void {
     console.log('close')
     this.dialogRef.close(false)
-}
-
-accept() {
-    console.log('accept')
-    this.dialogRef.close(true)
-}
+  }
 
   getDateErrorMessage() {
     const errorRequired = this.reminderForm.controls.date.hasError('required');

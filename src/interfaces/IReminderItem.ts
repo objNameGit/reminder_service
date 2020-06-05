@@ -1,5 +1,5 @@
 export interface IReminderItem {
-    id: number;
+    id: string;
     title: string;
     comment: string;
     date: number;

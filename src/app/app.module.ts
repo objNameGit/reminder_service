@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http'
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, CommonModule } from '@angular/common';
 
 import localeRu from '@angular/common/locales/ru';
 
@@ -18,7 +18,8 @@ import { ReminderListComponent } from './components/reminder-list/reminder-list.
 import { ReminderListItemComponent } from './components/reminder-list-item/reminder-list-item.component';
 import { AddReminderFormComponent } from './components/add-reminder-form/add-reminder-form.component';
 import { MaterialModule } from './material-module';
-
+import { MatButtonModule } from '@angular/material/button';
+import { RemindersService } from "./services/reminder-service/reminders.service"
 
 
 registerLocaleData(localeRu, 'ru');
@@ -28,7 +29,7 @@ registerLocaleData(localeRu, 'ru');
     AppComponent,
     ReminderListComponent,
     ReminderListItemComponent,
-    AddReminderFormComponent
+    AddReminderFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +40,8 @@ registerLocaleData(localeRu, 'ru');
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    MatButtonModule,
+    CommonModule,
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'ru'}, { provide: LOCALE_ID, useValue: 'ru' }],
   bootstrap: [AppComponent]

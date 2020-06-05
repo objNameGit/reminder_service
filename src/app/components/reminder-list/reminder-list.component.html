@@ -1,7 +1,7 @@
 <mat-list role="list" class='list-container'>
-    <h3 class="list-container__empty-message" *ngIf="reminderList.length === 0"> Нет напоминаний </h3>
+    <h3 class="list-container__empty-message" *ngIf="isListEmpty"> Нет напоминаний </h3>
     <reminder-list-item class="list-container__list-item"
-        *ngFor="let reminder of reminderList"
+        *ngFor="let reminder of remindersService.state$ | async"
         [reminder]="reminder"
     >
     </reminder-list-item>

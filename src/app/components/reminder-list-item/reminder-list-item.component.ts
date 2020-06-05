@@ -14,15 +14,25 @@ export class ReminderListItemComponent implements OnInit {
 
   @Input() reminder:IReminderItem;
 
+  public isElemChecked: boolean = false;
+
   ngOnInit(): void {
+    this.remindersService.checkedItemList$.subscribe((value) => {
+      this.isElemChecked = this.reminder.id in value;
+    });
   }
 
-  toggleElem(id) {
-    this.remindersService.toggleElem(id);
+  toggleElem() {
+    this.remindersService.toggleElem(this.reminder.id);
   }
 
-  isElemChecked(id) {
-    this.remindersService.isElemChecked(id);
+  // isElemChecked(): boolean {
+  //   return this.remindersService.isElemChecked(this.reminder.id);
+
+  // }
+
+  deleteReminder(): void {
+    this.remindersService.deleteReminder(this.reminder.id);
   }
 
 }
