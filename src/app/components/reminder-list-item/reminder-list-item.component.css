@@ -26,3 +26,23 @@
 .list-item__title {
     margin-bottom: 5px;
 }
+
+.list-item__delete-button-new {
+    position: absolute;
+    top: 0;
+    right: 0px;
+}
+
+.list-item__delete-button {
+    width: 24px;
+    height: 24px;
+}
+
+.icon-small {
+    font-size: 16px;
+    margin-top: -9px;
+}
+
+.mat-icon {
+    color: #606ba9;
+}

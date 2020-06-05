@@ -3,7 +3,7 @@
     (ngSubmit)="submit()"
     novalidate
 >
-    <h2>Новое напоминание!</h2>
+    <h2>{{ formAttr.title }}</h2>
     <div class="create-form__close-button" [mat-dialog-close]="false">
         <mat-icon color="#3e3e3e">close</mat-icon>
     </div>
@@ -49,13 +49,21 @@
     </div>
 
     <div class="create-form__button-list">
-        <button mat-raised-button class="create-form__button" id="no-button" [mat-dialog-close]="false">Отмена</button>
+        <button mat-raised-button 
+            class="create-form__button" 
+            id="no-button" 
+            [mat-dialog-close]="false"
+        >
+            {{ formAttr.cancelButtonName }}
+        </button>
         <button mat-raised-button 
             сlass="create-form__button" 
             id="yes-button"
             type="submit"
             [disabled]="reminderForm.invalid"
-        >Создать</button>
+        >
+            {{ formAttr.acceptButtonName }}
+        </button>
     </div>
     {{ this.reminderForm.invalid }}
 </form>

@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog'
 
 // import { ConfirmDialogComponent } from '@src/app/components/confirm-dialog/confirm-dialog.component';
 import { AddReminderFormComponent } from '@src/app/components/add-reminder-form/add-reminder-form.component';
+import { IReminderItem } from '@src/interfaces/IReminderItem';
+import { IFormAttributes } from '@src/interfaces/IFormAttributes';
 
 
 @Injectable({
@@ -27,9 +29,26 @@ export class DialogService {
   openAddReminderForm() {
     return this.dialog.open(AddReminderFormComponent, {
       width: '390px',
-      panelClass: 'confirm-dialog-container',
+      panelClass: 'add-dialog-container',
       disableClose: true,
       position: { top: "10px" },
+    });
+  }
+
+  openEditReminderForm(reminder: IReminderItem, formAttr?: IFormAttributes) {
+    console.log ('dialog_service reminder = ', reminder)
+    console.log ('dialog_service formAttr = ', formAttr)
+    const data = {
+      editAction: reminder,
+      formAttr
+    };
+
+    return this.dialog.open(AddReminderFormComponent, {
+      width: '390px',
+      panelClass: 'add-dialog-container',
+      disableClose: true,
+      position: { top: "10px" },
+      data,
     });
   }
 }

@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { RemindersService } from '@src/app/services/reminder-service/reminders.service';
+import { FormAttributes } from '@src/app/classes/FormAttributes';
 import { DialogService } from '@src/app/services/dialog-service/dialog.service';
 
 import type { IReminderItem } from '@src/interfaces/IReminderItem';
+import type { IFormAttributes } from '@src/interfaces/IFormAttributes';
 
 
 @Component({
@@ -40,8 +42,14 @@ export class ReminderListItemComponent implements OnInit {
     this.remindersService.deleteReminder(this.reminder.id);
   }
 
-  openAddReminderForm() {
-    this.dialogService.openAddReminderForm();
+  openEditReminderForm() {
+    const formAttr: IFormAttributes = {
+      acceptButtonName: 'Сохранить',
+      title: 'Редактирование'
+    };
+    const editFormAttr = new FormAttributes(formAttr);
+
+    this.dialogService.openEditReminderForm(this.reminder, editFormAttr);
   }
 
 }

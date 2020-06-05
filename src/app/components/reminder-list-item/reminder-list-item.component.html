@@ -1,23 +1,43 @@
 <mat-list-item class="list-item">
     <mat-icon matListIcon class="checkbox-icon-container">
-        <mat-checkbox color="primary" 
+        <mat-checkbox
+            color="primary"
             (change) ="toggleElem()"
             [checked]="isElemChecked"
         ></mat-checkbox>
     </mat-icon>
-    <div matLine class="list-item__info" (click)="openAddReminderForm()">
+    <div matLine class="list-item__info" (click)="openEditReminderForm()">
         <h3 matLine class="list-item__title"> {{ reminder.title }}</h3>
         <div mat-line class="list-item__text"> {{reminder.comment}} </div>
         <div mat-line class="list-item__date"> {{ reminder.date | date:'EEEE, d MMMM, y, h:mm' }} </div>
     </div>
+
     <div class="list-item__button-container">
-        <button
+        <!-- <button
             mat-mini-fab
-            class="list-item__delete-button" color="primary" 
+            class="list-item__edit-button"
+            color="primary"
+            aria-label="Edit reminder"
+            (click)="openEditReminderForm()"
+        >
+        <mat-icon>edit</mat-icon>
+        </button> -->
+        <!-- <button
+            mat-mini-fab
+            class="list-item__delete-button"
+            color="primary" 
             aria-label="Delete reminder"
             (click)="deleteReminder()"
         >
-          <mat-icon>delete</mat-icon>
+          <mat-icon class="icon-small" >delete</mat-icon>
+        </button> -->
+        <button 
+            mat-icon-button
+            class="list-item__delete-button-new"
+            aria-label="Delete reminder"
+            (click)="deleteReminder()"
+        >
+            <mat-icon color="primary">close</mat-icon>
         </button>
     </div>
 </mat-list-item>

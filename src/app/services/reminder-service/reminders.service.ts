@@ -163,7 +163,7 @@ export class RemindersService {
 
   toggleElem(id: string) {
     const isElemChecked = this.isElemChecked(id);
-    const newObj = this.checkedItemList.filter(() => true);
+    const newObj = this.checkedItemList.filter((elem) => true);
     
     if (isElemChecked) {
       delete newObj[id];
@@ -227,8 +227,18 @@ export class RemindersService {
     return this.state;
   }
 
-  addReminder(reminder) {
+  addReminder(reminder: IReminderItem) {
+    const newReminderList = [...this.state];
 
+    const elemIndex = newReminderList.findIndex((elem) => elem.id === reminder.id);
+
+    if (~elemIndex) {
+      newReminderList[elemIndex] = reminder;
+    } else {
+      newReminderList.push(reminder);
+    }
+
+    this.state = newReminderList;
   }
 
   getUserAuthData() {
