@@ -15,8 +15,8 @@
     <mat-card class="mat-elevation-z2 mat-elevation-z8">
       <!-- Заголовок -->
       <mat-card-title class="content__title" >{{ title }}</mat-card-title>
+      <!-- <mat-divider [inset]="true"></mat-divider> -->
 
-      <!-- <mat-divider></mat-divider> -->
       <!-- Кнопки выделить всё / удалить выбранное -->
       <mat-list class="content__action-button-list action-button-list">
         <!-- <div class="content__action-button-list action-button-list"> -->
@@ -49,7 +49,7 @@
         <!-- </div> -->
 
       </mat-list>
-      <mat-divider></mat-divider>
+      <mat-divider [inset]="true"></mat-divider>
       <reminder-list></reminder-list>
     </mat-card>
   </div>

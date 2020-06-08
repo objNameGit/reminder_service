@@ -17,12 +17,6 @@ h6 {
     margin: 8px 0;
 }
 
-/* .mat-card:not([class*=mat-elevation-z]) {
-    box-shadow: 0 2px 1px -1px rgba(0,0,0,1), 
-                0 1px 1px 0 rgba(0,0,0,1), 
-                0 1px 3px 0 rgba(0,0,0,1);
-} */
-
 .mat-checkbox{
     display: flex;
 }
@@ -58,6 +52,7 @@ h6 {
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    padding-bottom: 8px;
 }
 
 .action-button-list__action-button {
