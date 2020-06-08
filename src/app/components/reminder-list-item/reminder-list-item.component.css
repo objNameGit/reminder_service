@@ -1,20 +1,45 @@
+h3 {
+    margin: 0px;
+}
+
+.mat-icon {
+    color: #606ba9;
+}
+
+.mat-line {
+    white-space: normal!important;
+}
+
+
+.mat-checkbox, 
+.checkbox-icon-container {
+    display: flex;
+}
+
 .list-item {
     border: 1px solid #3f51b530;
     border-radius: 5px;
     margin-top: 20px;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .list-item:hover {
     background-color: #3f51b524;
 }
 
-.checkbox-icon-container {
-    display: flex;
+.list-item__info {
+    padding: 0 26px 0 10px!important;
+    width: 100%;
 }
 
-.list-item__info {
-    padding-right: 26px!important;
+.list-item__container {
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .list-item__title {
@@ -22,9 +47,18 @@
     font-weight: 500;
 }
 
-.list-item__text,
-.list-item__title {
-    margin-bottom: 5px;
+.titile__outdated-title {
+    font-size: 14px;
+}
+
+.list-item__text{
+    margin-top: 5px;
+    font-weight: lighter;
+}
+
+.list-item__date {
+    margin-top: 10px;
+    font-weight: 400;
 }
 
 .list-item__delete-button-new {
@@ -43,6 +77,11 @@
     margin-top: -9px;
 }
 
-.mat-icon {
-    color: #606ba9;
+.mat-icon-outdate {
+    color: #454545;
+}
+
+.is-outdate {
+    background-color: #c9c9c955;
+    opacity: 0.5;
 }

@@ -1,15 +1,19 @@
-<mat-list-item class="list-item">
-    <mat-icon matListIcon class="checkbox-icon-container">
-        <mat-checkbox
-            color="primary"
-            (change) ="toggleElem()"
-            [checked]="isElemChecked"
-        ></mat-checkbox>
-    </mat-icon>
-    <div matLine class="list-item__info" (click)="openEditReminderForm()">
-        <h3 matLine class="list-item__title"> {{ reminder.title }}</h3>
-        <div mat-line class="list-item__text"> {{reminder.comment}} </div>
-        <div mat-line class="list-item__date"> {{ reminder.date | date:'EEEE, d MMMM, y, h:mm' }} </div>
+<mat-list-item class="list-item" [class.is-outdate]="isOutdate()">
+    <div class="list-item__container">
+        <mat-icon matListIcon class="checkbox-icon-container">
+            <mat-checkbox
+                color="primary"
+                (change) ="toggleElem()"
+                [checked]="isElemChecked"
+            ></mat-checkbox>
+        </mat-icon>
+        <div matLine class="list-item__info" (click)="openEditReminderForm()">
+            <h3 matLine class="list-item__title title"> {{ reminder.title }} 
+                <span *ngIf="isOutdate()" class='titile__outdated-title'> (срок действия истёк)</span>
+            </h3>
+            <div mat-line class="list-item__text" *ngIf="!isOutdate()"> {{reminder.comment}} </div>
+            <div mat-line class="list-item__date" *ngIf="!isOutdate()"> {{ reminder.date | date:'EEEE, d MMMM, y, HH:mm' }} </div>
+        </div>
     </div>
 
     <div class="list-item__button-container">
@@ -37,7 +41,7 @@
             aria-label="Delete reminder"
             (click)="deleteReminder()"
         >
-            <mat-icon color="primary">close</mat-icon>
+            <mat-icon color="primary" [class.mat-icon-outdate]="isOutdate()">close</mat-icon>
         </button>
     </div>
 </mat-list-item>

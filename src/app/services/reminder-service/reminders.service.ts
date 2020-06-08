@@ -16,6 +16,7 @@ export class RemindersService {
   private baseUrl = 'https://europe-west1-st-testcase.cloudfunctions.net';
   private authUrl = `${this.baseUrl}/api/auth`;
   private myStorage = localStorage;
+  private timer = {};
   private readonly reminderList = new BehaviorSubject<IReminderItem[]>(this.getReminderListFromStore());
   private indeterminateStatus = new BehaviorSubject<boolean>(false);
   private checkedIdList = new BehaviorSubject<object>({});
@@ -157,7 +158,8 @@ export class RemindersService {
   }
 
   isCheckedActive() {
-    const allElemChecked = Object.keys(this.checkedItemList).length === this.state.length;
+    const checkedListLength =  Object.keys(this.checkedItemList).length;
+    const allElemChecked = checkedListLength === this.state.length && checkedListLength !== 0;
 
     return allElemChecked;
   }
@@ -178,8 +180,6 @@ export class RemindersService {
     console.log('TOGGLE this.checkedItemList = ', Object.keys(this.checkedItemList).length)
     console.log('TOGGLE checkedItemList = ', this.checkedItemList)
   }
-
-
 
   isElemChecked(id: string): boolean {
     const result = id in this.checkedItemList;
@@ -223,6 +223,7 @@ export class RemindersService {
   deleteReminder(id: string) {
     const newState = this.state.filter((reminder: IReminderItem) => id !== reminder.id);
 
+    this.clearTimer(id);
     this.state = newState;
 
     return this.state;
@@ -234,9 +235,15 @@ export class RemindersService {
     const elemIndex = newReminderList.findIndex((elem) => elem.id === reminder.id);
 
     if (~elemIndex) {
+      this.clearTimer(reminder.id);
+
       newReminderList[elemIndex] = reminder;
+
+      this.setTimer(reminder);
     } else {
       newReminderList.push(reminder);
+
+      this.setTimer(reminder)
     }
 
     this.state = newReminderList;
@@ -247,6 +254,42 @@ export class RemindersService {
     const result = userAuthData ? JSON.parse(userAuthData) : null;
 
     return result;
+  }
+
+  setTimerToAll() {
+    const reminderList = this.state;
+
+    reminderList.map((reminder) => this.setTimer(reminder));
+    console.log('таймер утсановлен = ', this.timer)
+  }
+
+  clearTimerToAll() {
+    const idList = Object.keys(this.timer);
+
+    idList.map((id) => this.clearTimer(id));
+  }
+
+  setTimer(reminder: IReminderItem) {
+    const curDate = Date.now();
+    const diff = reminder.date - curDate;
+    console.log('set timer = ', this.timer)
+    if (diff > 0) {
+      this.timer[reminder.id] = setTimeout(() => {
+        console.log ('start =', this.timer)
+
+        alert('Ваш час настал');
+        delete this.timer[reminder.id];
+        console.log ('clear =', this.timer)
+      }, diff);
+    }
+  }
+
+  clearTimer(id: string) {
+    console.log('clear timer');
+    if (id in this.timer) {
+      console.log('таймер очищен = ', id)
+      clearTimeout(this.timer[id]);
+    }
   }
 
 /****************************************************************************** */

@@ -31,6 +31,12 @@ export class AppComponent {
 
       this.hasCheckedElem = !!length;
     });
+
+    this.remindersService.setTimerToAll();
+  }
+
+  ngOnDesroy() {
+    this.remindersService.clearTimerToAll();
   }
 
   getUserId(): void {

@@ -52,4 +52,7 @@ export class ReminderListItemComponent implements OnInit {
     this.dialogService.openEditReminderForm(this.reminder, editFormAttr);
   }
 
+  isOutdate() {
+    return this.reminder.date < Date.now()
+  }
 }

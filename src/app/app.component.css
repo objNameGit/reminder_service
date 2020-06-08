@@ -17,24 +17,35 @@ h6 {
     margin: 8px 0;
 }
 
-.title {
+/* .mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,1), 
+                0 1px 1px 0 rgba(0,0,0,1), 
+                0 1px 3px 0 rgba(0,0,0,1);
+} */
+
+.mat-checkbox{
+    display: flex;
+}
+
+.content__title {
     text-align: center;
+    margin-top: 15px;
 }
 
 .reminder-app {
     position: relative;
     display: flex;
     justify-content: center;
-    margin: auto;
-    width: 50%;
+    margin-top: 15px;
 }
 
 .reminder-app__content {
     min-width: 50%;
+    margin-right: 80px;
 }
 
 .reminder-app__side-menu {
-    margin-right: 20px;
+    margin: 20px;
 }
 
 .side-menu__add-button {
@@ -46,4 +57,9 @@ h6 {
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+}
+
+.action-button-list__action-button {
+    margin: 8px 8px 8px 4px;
 }

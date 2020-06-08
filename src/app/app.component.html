@@ -12,17 +12,18 @@
   </div>
 
   <div class='reminder-app__content content'>
-    <mat-card>
+    <mat-card class="mat-elevation-z2 mat-elevation-z8">
       <!-- Заголовок -->
-      <mat-card-title class="title">{{ title }}</mat-card-title>
+      <mat-card-title class="content__title" >{{ title }}</mat-card-title>
 
+      <!-- <mat-divider></mat-divider> -->
       <!-- Кнопки выделить всё / удалить выбранное -->
       <mat-list class="content__action-button-list action-button-list">
         <!-- <div class="content__action-button-list action-button-list"> -->
-        
+
           <!-- Кнопка "выделить всё" -->
           <mat-list-item class="action-button-list__action-button select-all-button">
-            <mat-icon matListIcon>
+            <!-- <mat-icon matListIcon> -->
               <mat-checkbox
                 color='primary' 
                 (change)="toggleAll($event)"
@@ -30,8 +31,8 @@
                 [indeterminate]="remindersService.isIndeterminateActive$ | async"
                 (indeterminateChange)="unselectedAll()"
               ></mat-checkbox>
-            </mat-icon>
-            
+            <!-- </mat-icon> -->
+
           </mat-list-item>
 
           <!-- Кнопка "удалить выбранное" -->
@@ -48,6 +49,7 @@
         <!-- </div> -->
 
       </mat-list>
+      <mat-divider></mat-divider>
       <reminder-list></reminder-list>
     </mat-card>
   </div>
