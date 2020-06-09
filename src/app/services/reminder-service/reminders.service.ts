@@ -1,17 +1,25 @@
-import { Injectable, ɵConsole } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, map, tap, mergeMap, filter } from 'rxjs/operators';
+import { catchError, tap, mergeMap } from 'rxjs/operators';
+
+import { SnackbarService } from '@src/app/services/snackbar-service/snackbar.service';
 
 import { IReminderItem } from '@src/interfaces/IReminderItem';
 import { IAutorizationData } from '@src/interfaces/IAutorizationData';
 
 import cloneDeep from '@src/../lodash.clonedeep';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class RemindersService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private snackbarService: SnackbarService,
+  ) { }
 
   private baseUrl = 'https://europe-west1-st-testcase.cloudfunctions.net';
   private authUrl = `${this.baseUrl}/api/auth`;
@@ -272,12 +280,18 @@ export class RemindersService {
   setTimer(reminder: IReminderItem) {
     const curDate = Date.now();
     const diff = reminder.date - curDate;
+
+    console.log('curDate = ', curDate);
+    console.log('reminder.date = ', reminder.date);
+    console.log('diff = ', diff);
     console.log('set timer = ', this.timer)
+
     if (diff > 0) {
       this.timer[reminder.id] = setTimeout(() => {
         console.log ('start =', this.timer)
 
-        alert('Ваш час настал');
+        this.openSnackBar(reminder, 'Закрыть');
+
         delete this.timer[reminder.id];
         console.log ('clear =', this.timer)
       }, diff);
@@ -292,6 +306,10 @@ export class RemindersService {
     }
   }
 
+  openSnackBar(reminder: IReminderItem, action: string) {
+    this.snackbarService.openSnackBar(reminder, action);
+  }
+
 /****************************************************************************** */
   // Удалить после того как заработает сервер
   stubAddUserToStorage() {
@@ -303,7 +321,7 @@ export class RemindersService {
         id: 'dwf90fSD-0vo0vrk3wvlvdfsvXC',
         name: 'John Doe'
       }
-  
+
       this.myStorage.setItem('reminderUserAuthData', JSON.stringify(userInfo));
     }
   }

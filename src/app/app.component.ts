@@ -63,5 +63,4 @@ export class AppComponent {
   openAddReminderForm() {
     this.dialogService.openAddReminderForm();
   }
-
 }

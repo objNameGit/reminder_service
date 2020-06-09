@@ -3,11 +3,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators, NgForm, FormGroup } from '@angular/forms';
 import { v4 as uuidv4 } from "uuid";
 
+import { FormAttributes } from "@src/app/classes/FormAttributes"
+
 import { RemindersService } from '@src/app/services/reminder-service/reminders.service';
 import { IReminderItem } from '@src/interfaces/IReminderItem';
 import { IFormValues } from '@src/interfaces/IFormValues'
-
-import { FormAttributes } from "@src/app/classes/FormAttributes"
 
 
 @Component({
@@ -20,8 +20,8 @@ export class AddReminderFormComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
     private readonly dialogRef: MatDialogRef<AddReminderFormComponent>,
-    readonly remindersService: RemindersService
-    ) { }
+    private readonly remindersService: RemindersService,
+  ) { }
 
   // Нельзя уносить в formValue, т.к. форма проверяет минимальное значение по этому параметру.
   // formValue.date будет изменена при редактировании, и валидация даты будет неверная.
@@ -117,7 +117,6 @@ export class AddReminderFormComponent implements OnInit {
       comment,
     }
 
-    // this.remindersService.state = [...this.remindersService.state, reminder];
     this.remindersService.addReminder(reminder);
     this.closeDialog();
   }
