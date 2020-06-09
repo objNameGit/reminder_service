@@ -25,7 +25,8 @@ export class AddReminderFormComponent implements OnInit {
 
   // Нельзя уносить в formValue, т.к. форма проверяет минимальное значение по этому параметру.
   // formValue.date будет изменена при редактировании, и валидация даты будет неверная.
-  public minDate: object = new Date();
+  public minDate: Date = new Date();
+  public minTime = this.minDate.toLocaleString('ru', {hour:'2-digit', minute:'2-digit'});
 
   public title: string = 'Новое напоминание!';
   public formAttr : FormAttributes;
@@ -33,7 +34,7 @@ export class AddReminderFormComponent implements OnInit {
     id: '',
     title: '',
     date: +this.minDate,
-    time: '00:00',
+    time: this.minTime,
     comment: '',
   }
   public reminderForm: FormGroup;
@@ -42,7 +43,7 @@ export class AddReminderFormComponent implements OnInit {
     this.prepareForm();
   }
 
-  prepareForm() {
+  prepareForm(): void {
     const isEditAction = this.data && 'editAction' in this.data;
     const needChangeFormAttr = this.data && 'formAttr' in this.data;
 
@@ -68,7 +69,10 @@ export class AddReminderFormComponent implements OnInit {
         Validators.required,
         this.userDateValidator,
       ]),
-      "time": new FormControl(this.formValue.time, Validators.pattern("[0-9][0-9]:[0-9][0-9]")),
+      "time": new FormControl(this.formValue.time, [
+        Validators.pattern("[0-9][0-9]:[0-9][0-9]"),
+        this.userTimeValidator,
+      ]),
       "comment": new FormControl(this.formValue.comment),
     };
   }
@@ -91,15 +95,23 @@ export class AddReminderFormComponent implements OnInit {
     this.formValue.time = time || this.formValue.time;
   }
 
-  changeFormAttributes({}) {
-
-  }
-
   userDateValidator(control: FormControl): { [s: string]: boolean } {
     const inputDate: number = +new Date(control.value);
     const curDate: number = +new Date(new Date().setHours(0, 0, 0, 0));
 
     if (inputDate < curDate) {
+      return { "date": true }
+    }
+
+    return null;
+  }
+
+  userTimeValidator(control: FormControl): { [s: string]: boolean } {
+    const inputHours: string = control.value.slice(0, 2)
+    const inputMin: string = control.value.slice(3, 5);
+    const newDate: number = +new Date(new Date().setHours(+inputHours, +inputMin));
+
+    if (newDate < Date.now()) {
       return { "date": true }
     }
 
@@ -122,7 +134,6 @@ export class AddReminderFormComponent implements OnInit {
   }
 
   closeDialog(): void {
-    console.log('close')
     this.dialogRef.close(false)
   }
 

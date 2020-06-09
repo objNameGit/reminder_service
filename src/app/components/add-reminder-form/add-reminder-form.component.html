@@ -33,8 +33,9 @@
             <div class="divider"></div>
             <mat-form-field appearance="legacy" class="half-width">
                 <mat-label>Вермя</mat-label>
-                <input matInput type="time" formControlName="time">
+                <input matInput [min]="minTime" type="time" formControlName="time">
                 <mat-hint>Введите время</mat-hint>
+                <mat-error *ngIf="reminderForm.controls['time'].invalid">Время не может быть меньше текущего</mat-error>
             </mat-form-field>
         </div>
 
