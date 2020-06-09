@@ -109,7 +109,7 @@ export class AddReminderFormComponent implements OnInit {
   submit() {
     const { title, comment, date, time } = this.reminderForm.value;
     const [hours, minutes] = time.split(":");
-    const dateTime = new Date(date).setHours(hours, minutes);
+    const dateTime = new Date(date).setHours(hours, minutes, 0);
     const reminder = {
       id: this.formValue.id || uuidv4(),
       date: dateTime,
