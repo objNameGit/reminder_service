@@ -36,8 +36,6 @@ export class DialogService {
   }
 
   openEditReminderForm(reminder: IReminderItem, formAttr?: IFormAttributes) {
-    console.log ('dialog_service reminder = ', reminder)
-    console.log ('dialog_service formAttr = ', formAttr)
     const data = {
       editAction: reminder,
       formAttr

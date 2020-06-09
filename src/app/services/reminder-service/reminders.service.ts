@@ -161,11 +161,9 @@ export class RemindersService {
     const reminderQuantity = this.state.length;
 
     this.isIndeterminateActive = checkedElemQuantity > 0 && checkedElemQuantity < reminderQuantity;
-    console.log ('checkedElemQuantity = ', checkedElemQuantity);
-    console.log ('reminderQuantity = ', reminderQuantity);
   }
 
-  isCheckedActive() {
+  isCheckedActive(): boolean {
     const checkedListLength =  Object.keys(this.checkedItemList).length;
     const allElemChecked = checkedListLength === this.state.length && checkedListLength !== 0;
 
@@ -183,10 +181,6 @@ export class RemindersService {
     }
 
     this.checkedItemList = newObj;
-    console.log('TOGGLE newObj = ', newObj)
-    console.log('TOGGLE newObj len = ', Object.keys(newObj).length)
-    console.log('TOGGLE this.checkedItemList = ', Object.keys(this.checkedItemList).length)
-    console.log('TOGGLE checkedItemList = ', this.checkedItemList)
   }
 
   isElemChecked(id: string): boolean {
@@ -197,7 +191,6 @@ export class RemindersService {
 
   unselectedAll() {
     this.checkedItemList = {};
-    // this.changeIndeterminateActive();
   }
 
   deleteSelected(): IReminderItem[] {
@@ -237,7 +230,7 @@ export class RemindersService {
     return this.state;
   }
 
-  addReminder(reminder: IReminderItem) {
+  addReminder(reminder: IReminderItem): void {
     const newReminderList = [...this.state];
 
     const elemIndex = newReminderList.findIndex((elem) => elem.id === reminder.id);
@@ -268,40 +261,29 @@ export class RemindersService {
     const reminderList = this.state;
 
     reminderList.map((reminder) => this.setTimer(reminder));
-    console.log('таймер утсановлен = ', this.timer)
   }
 
-  clearTimerToAll() {
+  clearTimerToAll(): void {
     const idList = Object.keys(this.timer);
 
     idList.map((id) => this.clearTimer(id));
   }
 
-  setTimer(reminder: IReminderItem) {
+  setTimer(reminder: IReminderItem): void {
     const curDate = Date.now();
     const diff = reminder.date - curDate;
 
-    console.log('curDate = ', curDate);
-    console.log('reminder.date = ', reminder.date);
-    console.log('diff = ', diff);
-    console.log('set timer = ', this.timer)
-
     if (diff > 0) {
       this.timer[reminder.id] = setTimeout(() => {
-        console.log ('start =', this.timer)
-
         this.openSnackBar(reminder, 'Закрыть');
 
         delete this.timer[reminder.id];
-        console.log ('clear =', this.timer)
       }, diff);
     }
   }
 
-  clearTimer(id: string) {
-    console.log('clear timer');
+  clearTimer(id: string): void {
     if (id in this.timer) {
-      console.log('таймер очищен = ', id)
       clearTimeout(this.timer[id]);
     }
   }
@@ -310,9 +292,7 @@ export class RemindersService {
     this.snackbarService.openSnackBar(reminder, action);
   }
 
-/****************************************************************************** */
-  // Удалить после того как заработает сервер
-  stubAddUserToStorage() {
+  stubAddUserToStorage(): void {
     const key = 'reminderUserAuthData';
     const userData = this.myStorage.getItem(key);
 

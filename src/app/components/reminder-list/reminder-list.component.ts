@@ -16,22 +16,6 @@ export class ReminderListComponent implements OnInit {
   ngOnInit() {
     this.remindersService.state$.subscribe((newReminderList) => {
       this.isListEmpty = !newReminderList.length;
-    });      
+    });
   }
-
-  // getReminderList(): void {
-  //   this.remindersService.getData()
-  //     .subscribe(reminderList => {
-  //       this.reminderList = reminderList;
-  //     })
-  // }
-
-  // Удалить после того, как заработает апи
-  // getStubReminderList(): void {
-  //   this.remindersService.getData()
-  //     .subscribe(reminderList => {
-  //       console.log('test = ',reminderList);
-  //       this.reminderList = reminderList
-  //     })
-  // }
 }

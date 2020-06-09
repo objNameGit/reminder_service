@@ -20,10 +20,6 @@ export class AppComponent {
   public isChecked = false
 
   ngOnInit() {
-    // this.remindersService.isIndeterminateActive$.subscribe((value) => {
-    //   console.log ('isIndeterminate = ', value)
-    //   this.isIndeterminate = value;
-    // });
     this.remindersService.stubAddUserToStorage();
 
     this.remindersService.checkedItemList$.subscribe((value) => {
